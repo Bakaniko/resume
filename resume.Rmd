@@ -1,6 +1,5 @@
 ---
-title: mleary_resume
-author: Matt Leary
+title: Nicolas_Roelandt_resume
 date: "`r Sys.Date()`"
 output:
   pagedown::html_resume:
@@ -10,7 +9,19 @@ output:
     self_contained: true
 params:
   doctype: "HTML" # "PDF" or "HTML" is automatically updated in update_resume.R 
-
+  author: "Nicolas Roelandt"
+  city: |
+    315 chemin vieux  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;42520 Maclas, France
+  tel: "+33642404255"
+  mail: "nicolas@roelandt.fr"
+  github: "Bakaniko"
+  blog: "roelandtn.frama.io"
+  blog_link: "https://roelandtn.frama.io/"
+  linkedin: "nicolasroelandt"
+  abstract: "Analyste de données géospatiales"
+  
+author: "`r params$author`"
 ---
 
 ```{r setup, include=FALSE}
@@ -24,16 +35,6 @@ library(glue)
 
 #source helper functions
 source('helper_functions.R')
-
-
-# get data from xlsx file
-# position_data <- readxl::read_excel('resume_data.xlsx',
-#                                     sheet = "positions",
-#                                     na = c("", "NA", "na"))
-# 
-# skill_data <- readxl::read_excel('resume_data.xlsx',
-#                                  sheet = "skills",
-#                                  na = c("", "NA", "na"))
 
 position_data <- read.csv('./data/position_data.csv', stringsAsFactors = F)
 skill_data <- read.csv('./data/skill_data.csv', stringsAsFactors = F)
@@ -52,23 +53,23 @@ Contact {#contact}
 # Adjust contact info based on document type - html has link while pdf does not
 if(params$doctype == "HTML") {
   glue::glue('
-    - <i class="fa fa-map-marked-alt"></i> Richmond, Virginia
-    - <i class="fa fa-phone"></i> <a href="tel:+19109886368">(910) 988-6368</a>
-    - <i class="fa fa-envelope"></i> matt.leary@protonmail.com
-    - <i class="fa fa-globe"></i> [mattleary.com](https://www.mattleary.com/blog/)
-    - <i class="fa fa-github"></i> [github.com/mleary](https://github.com/mleary)
-    - <i class="fab fa-linkedin-in"></i> [linkedin.com/mbleary](https://www.linkedin.com/in/mbleary/)
+    - <i class="fa fa-map-marked-alt"></i> {params$city}
+    - <i class="fa fa-phone"></i> <a href="tel:{params$tel}">{params$tel}</a>
+    - <i class="fa fa-envelope"></i> {params$mail}
+    - <i class="fa fa-globe"></i> [{params$blog}]({params$blog_link})
+    - <i class="fa fa-github"></i> [github.com/{params$github}](https://github.com/{params$github})
+    - <i class="fab fa-linkedin-in"></i> [linkedin.com/{params$linkedin}](https://www.linkedin.com/in/{params$linkedin}/)
   ')
 } 
 
 if(params$doctype == "PDF") {
   glue::glue('
-    - <i class="fa fa-map-marked-alt"></i> Richmond, Virginia
-    - <i class="fa fa-phone"></i> 910.988.6368
-    - <i class="fa fa-envelope"></i> matt.leary<!-- breaking hyplerlink -->@protonmail.com
-    - <i class="fa fa-globe"></i> mattleary.com
-    - <i class="fa fa-github"></i> github.com/mleary
-    - <i class="fab fa-linkedin-in"></i> linkedin.com/mbleary
+    - <i class="fa fa-map-marked-alt"></i> {params$city}
+    - <i class="fa fa-phone"></i> {params$tel}
+    - <i class="fa fa-envelope"></i> {params$mail}
+    - <i class="fa fa-globe"></i> {params$blog}
+    - <i class="fa fa-github"></i> github.com/{params$github}
+    - <i class="fab fa-linkedin-in"></i> linkedin.com/{params$linkedin}
   ')
 }
 
@@ -79,7 +80,7 @@ if(params$doctype == "PDF") {
 ```{r download}
 # if doctype is html add link to download a pdf version
 if(params$doctype == "HTML"){
-  cat("[<i class='fas fa-download'></i> Download as a PDF](https://github.com/mleary/resume/raw/main/mleary_resume.pdf)")
+  cat("[<i class='fas fa-download'></i> Download as a PDF](https://github.com/bakaniko/resume/raw/main/Nicolas_Roelandt_resume.pdf)")
 }
 
 ```
@@ -87,7 +88,7 @@ if(params$doctype == "HTML"){
 <br>
 
 
-Tech skills {#skills}
+Compétence techniques {#skills}
 --------------------------------------------------------------------------------
 
 ```{r codingskills, dev.args = list(bg = 'transparent')}
@@ -97,30 +98,30 @@ build_skill_bars(skill_data, "Tech")
 
 ```
 
-R skills {#rpackages}
+Langues {#languages}
 --------------------------------------------------------------------------------
 
-```{r rskills, dev.args = list(bg = 'transparent')}
+```{r languages, dev.args = list(bg = 'transparent')}
 
 # function from helper_functions.R
-build_skill_bars(skill_data, "R Packages")
+build_skill_bars(skill_data, "Languages")
 
 ```
 
-Learning Focus {#interests}
+Autres informations {#interests}
 --------------------------------------------------------------------------------
 
-```{r learningfocus, dev.args = list(bg = 'transparent')}
+```{r Interests, dev.args = list(bg = 'transparent')}
 
 # function from helper_functions.R
 build_skill_bars(skill_data, "Interests")
 
 ```
 
+<br>
 
 Disclaimer {#disclaimer}
 --------------------------------------------------------------------------------
-
 
 ```{r}
 
@@ -128,13 +129,13 @@ Disclaimer {#disclaimer}
 if(params$doctype == "HTML") {
   glue::glue("
     Made w/ [**pagedown**](https://github.com/rstudio/pagedown).   
-    Source code: [**Github repo**](https://github.com/mleary/resume).
+    Source code: [**Github repo**](https://github.com/{params$github}/resume).
   ")
 } 
 if(params$doctype == "PDF") {
   glue::glue("
     Made w/ **pagedown::html_resume**
-    Code: **github.com/mleary/resume** 
+    Code: **github.com/{params$github}/resume** 
   ")
 }
 ```
@@ -149,10 +150,10 @@ Main
 ================================================================================
 
 
-Matthew Leary {#title}
+`r params$author` {#title}
 --------------------------------------------------------------------------------
 
-I enjoy working with data to find and deliver insights, solve business problems, and build tools that help people work more efficiently. I moved into data science after 10+ years working in public policy and public relations.
+`r params$abstract`
 
 
 
